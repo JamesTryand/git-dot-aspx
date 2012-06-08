@@ -23,20 +23,40 @@ namespace GitAspx.Controllers {
 	using GitAspx.Lib;
 	using GitAspx.ViewModels;
 	using System.Linq;
+    using System.IO;
 
 	public class DirectoryListController : Controller {
-		readonly RepositoryService repositories;
+		RepositoryService repositories;
 
 		public DirectoryListController(RepositoryService repositories) {
 			this.repositories = repositories;
 		}
 
-		public ActionResult Index() {
-			return View(new DirectoryListViewModel {
-				RepositoriesDirectory = repositories.GetRepositoriesDirectory().FullName,
-				Repositories = repositories.GetAllRepositories().Select(x => new RepositoryViewModel(x))
-			});
-		}
+        public ActionResult Index()
+        {
+            return View(new DirectoryListViewModel
+            {
+                RepositoriesDirectory = repositories.GetRepositoriesDirectory().FullName,
+                Repositories = repositories.GetAllRepositories().Select(x => new RepositoryViewModel(x))
+            });
+        }
+
+        public ActionResult List(string id)
+        {
+            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(id), });
+
+            return Index();
+            //return View(new DirectoryListViewModel
+            //{
+            //    RepositoriesDirectory = repositories.GetRepositoriesDirectory().FullName,
+            //    Repositories = repositories.GetAllRepositories().Select(x => new RepositoryViewModel(x))
+            //});
+        }
+
+        public ActionResult Main()
+        {
+            return View(RepositoryBaseProvider.RepositoryBases(repositories.GetRepositoriesDirectory().FullName));
+        }
 
 		[HttpPost]
 		public ActionResult Create(string project) {
