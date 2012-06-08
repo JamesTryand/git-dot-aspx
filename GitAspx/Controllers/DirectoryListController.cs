@@ -46,16 +46,23 @@ namespace GitAspx.Controllers {
             repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(id), });
 
             return Index();
-            //return View(new DirectoryListViewModel
-            //{
-            //    RepositoriesDirectory = repositories.GetRepositoriesDirectory().FullName,
-            //    Repositories = repositories.GetAllRepositories().Select(x => new RepositoryViewModel(x))
-            //});
         }
 
         public ActionResult Main()
         {
             return View(RepositoryBaseProvider.RepositoryBases(repositories.GetRepositoriesDirectory().FullName));
+        }
+
+        [HttpPost]
+        public ActionResult New(string id, string project)
+        {
+            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(id), });
+
+            if (!string.IsNullOrEmpty(project))
+            {
+                repositories.CreateRepository(id, project);
+            }
+            return RedirectToAction("List", new { id = id });
         }
 
 		[HttpPost]

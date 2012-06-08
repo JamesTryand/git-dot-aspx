@@ -35,7 +35,8 @@ namespace GitAspx {
             routes.MapRoute("DirectoryList", "List", new { controller = "DirectoryList", action = "List" });
             routes.MapRoute("DirectoryListIndex", "Index", new { controller = "DirectoryList", action = "Index" });
             routes.MapRoute("DirectoryListIndex2", "DirectoryList", new { controller = "DirectoryList", action = "Index" });
-			routes.MapRoute("DirectoryListCreate", "Create", new { controller = "DirectoryList", action = "Create" });
+            routes.MapRoute("DirectoryListCreate", "Create", new { controller = "DirectoryList", action = "Create" });
+            routes.MapRoute("DirectoryListNew", "New", new { controller = "DirectoryList", action = "New" });
 
 			routes.MapRoute("info-refs", "{project}/info/refs",
 			                new {controller = "InfoRefs", action = "Execute"},

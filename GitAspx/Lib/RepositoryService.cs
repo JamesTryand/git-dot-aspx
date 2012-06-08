@@ -59,15 +59,25 @@ namespace GitAspx.Lib {
 		}
 
 		public void CreateRepository(string project) {
-			var directory = Path.Combine(appSettings.RepositoriesDirectory.FullName, project + ".git");
 
-			if (!Directory.Exists(directory)) {
-				Directory.CreateDirectory(directory);
+            CreateRepository(appSettings.RepositoriesDirectory.FullName, project);
 
-				using(var repository = new GitSharp.Core.Repository(new DirectoryInfo(directory))) {
-					repository.Create(true);
-				}
-			}
 		}
-	}
+
+        public void CreateRepository(string rootrepository, string project)
+        {
+            var directory = Path.Combine(rootrepository, project + ".git");
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+
+                using (var repository = new GitSharp.Core.Repository(new DirectoryInfo(directory)))
+                {
+                    repository.Create(true);
+                }
+            }
+            
+        }
+    }
 }
