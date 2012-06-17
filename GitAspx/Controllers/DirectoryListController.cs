@@ -31,7 +31,6 @@ namespace GitAspx.Controllers {
 		public DirectoryListController(RepositoryService repositories) {
 			this.repositories = repositories;
 		}
-
         public ActionResult Index()
         {
             return View(new DirectoryListViewModel
@@ -41,9 +40,9 @@ namespace GitAspx.Controllers {
             });
         }
 
-        public ActionResult List(string id)
+        public ActionResult List(string store)
         {
-            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(id), });
+            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = repositories.GetRepositoriesStoreDirectory(store), });
 
             return Index();
         }
@@ -53,16 +52,17 @@ namespace GitAspx.Controllers {
             return View(RepositoryBaseProvider.RepositoryBases(repositories.GetRepositoriesDirectory().FullName));
         }
 
-        [HttpPost]
-        public ActionResult New(string id, string project)
-        {
-            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(id), });
 
-            if (!string.IsNullOrEmpty(project))
+        [HttpPost]
+        public ActionResult New(string store, string project)
+        {
+            repositories = new RepositoryService(new AppSettings() { RepositoriesDirectory = repositories.GetRepositoriesStoreDirectory(store), });
+
+            if (!string.IsNullOrWhiteSpace(project) && !string.IsNullOrWhiteSpace(store))
             {
-                repositories.CreateRepository(id, project);
+                repositories.CreateRepository(store, project);
             }
-            return RedirectToAction("List", new { id = id });
+            return RedirectToAction("List", new { store = repositories.GetRepositoriesStoreDirectory(store).Name, });
         }
 
 		[HttpPost]

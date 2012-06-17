@@ -45,7 +45,7 @@ namespace GitAspx.Lib {
 		}
 
 		public Repository GetRepository(string store, string project) {
-			var directory = Path.Combine(appSettings.RepositoriesDirectory.FullName, project);
+			var directory = Path.Combine(appSettings.RepositoriesDirectory.FullName, store, project);
 
 			if (!Directory.Exists(directory)) {
 				return null;
@@ -55,14 +55,20 @@ namespace GitAspx.Lib {
 			return new Repository(new DirectoryInfo(directory));
 		}
 
-		public DirectoryInfo GetRepositoriesDirectory() {
-			return appSettings.RepositoriesDirectory;
-		}
+        public DirectoryInfo GetRepositoriesDirectory()
+        {
+            return appSettings.RepositoriesDirectory;
+        }
+
+        public string GetRepositoriesDirectoryPath()
+        {
+            return appSettings.RepositoriesDirectory.FullName;
+        }
 
         //TODO:Fix GetRepositoriesStoreDirectory with store value
         public DirectoryInfo GetRepositoriesStoreDirectory(string store)
         {
-            throw new NotImplementedException();
+            return new DirectoryInfo(Path.Combine(GetRepositoriesDirectoryPath(), store));
         }
 
 		public void CreateRepository(string project) {

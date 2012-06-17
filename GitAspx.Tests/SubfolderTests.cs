@@ -19,7 +19,7 @@ namespace GitAspx.Tests
         {
             var controller = new DirectoryListController(new RepositoryService(new AppSettings()));
             // var controller = new DirectoryListController(new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(@"C:\Repositories\Monkey1"), }));
-            var result = controller.List(@"C:\Repositories\Monkey1") as ViewResult;
+            var result = controller.List(@"Monkey1") as ViewResult;
             ((DirectoryListViewModel)result.Model).RepositoriesDirectory.ShouldEqual(@"C:\Repositories\Monkey1");
         }
 
@@ -28,7 +28,7 @@ namespace GitAspx.Tests
         {
             var controller = new DirectoryListController(new RepositoryService(new AppSettings()));
             // var controller = new DirectoryListController(new RepositoryService(new AppSettings() { RepositoriesDirectory = new DirectoryInfo(@"C:\Repositories\Monkey1"), }));
-            var result = controller.List(@"C%3A%5CRepositories%5CMonkey1") as ViewResult;
+            var result = controller.List(@"Monkey1") as ViewResult;
             ((DirectoryListViewModel)result.Model).RepositoriesDirectory.ShouldEqual(@"C:\Repositories\Monkey1");
         }
     }

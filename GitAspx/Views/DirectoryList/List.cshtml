@@ -34,7 +34,7 @@
 	<div class="title">Create a new repository <a href="#" class="jqmClose"><img src="@Url.Content("~/Content/images/close.png")" alt="Close" /></a></div>		
 	<div class="content">
 	@using (Html.BeginForm("New", "DirectoryList")) {
-        <input type="hidden" name="id" value="@Model.RepositoriesDirectory" />
+        <input type="hidden" name="store" value="@Model.RepositoriesDirectory" />
 		<input type="text" name="project" />@:.git<br />
 		<input type="submit" value="Create a new repository" class="button" />
 	}

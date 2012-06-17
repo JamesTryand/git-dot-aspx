@@ -17,7 +17,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Name, "List", new { id=item.FullName }) 
+            @Html.ActionLink(item.Name, "List", new { store=item.Name }) 
         </td>
     </tr>
 }
