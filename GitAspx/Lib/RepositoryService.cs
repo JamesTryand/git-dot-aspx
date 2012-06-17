@@ -22,6 +22,7 @@ namespace GitAspx.Lib {
 	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
+    using System;
 
 	public class RepositoryService {
 		readonly AppSettings appSettings;
@@ -43,7 +44,7 @@ namespace GitAspx.Lib {
 				.ToList();
 		}
 
-		public Repository GetRepository(string project) {
+		public Repository GetRepository(string store, string project) {
 			var directory = Path.Combine(appSettings.RepositoriesDirectory.FullName, project);
 
 			if (!Directory.Exists(directory)) {
@@ -57,6 +58,12 @@ namespace GitAspx.Lib {
 		public DirectoryInfo GetRepositoriesDirectory() {
 			return appSettings.RepositoriesDirectory;
 		}
+
+        //TODO:Fix GetRepositoriesStoreDirectory with store value
+        public DirectoryInfo GetRepositoriesStoreDirectory(string store)
+        {
+            throw new NotImplementedException();
+        }
 
 		public void CreateRepository(string project) {
 

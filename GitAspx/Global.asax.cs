@@ -38,39 +38,39 @@ namespace GitAspx {
             routes.MapRoute("DirectoryListCreate", "Create", new { controller = "DirectoryList", action = "Create" });
             routes.MapRoute("DirectoryListNew", "New", new { controller = "DirectoryList", action = "New" });
 
-			routes.MapRoute("info-refs", "{project}/info/refs",
+            routes.MapRoute("info-refs", "{store}/{project}/info/refs",
 			                new {controller = "InfoRefs", action = "Execute"},
 			                new {method = new HttpMethodConstraint("GET")});
 
-			routes.MapRoute("upload-pack", "{project}/git-upload-pack",
+            routes.MapRoute("upload-pack", "{store}/{project}/git-upload-pack",
 			                new {controller = "Rpc", action = "UploadPack"},
 			                new {method = new HttpMethodConstraint("POST")});
 
 
-			routes.MapRoute("receive-pack", "{project}/git-receive-pack",
+            routes.MapRoute("receive-pack", "{store}/{project}/git-receive-pack",
 			                new {controller = "Rpc", action = "ReceivePack"},
 			                new {method = new HttpMethodConstraint("POST")});
 
 			// Dumb protocol
-			//routes.MapRoute("info-refs-dumb", "dumb/{project}/info/refs", new {controller = "Dumb", action = "InfoRefs"});
-			routes.MapRoute("get-text-file", "{project}/HEAD", new{controller = "Dumb", action="GetTextFile" });
-			routes.MapRoute("get-text-file2", "{project}/objects/info/alternates", new { controller = "Dumb", action = "GetTextFile" });
-			routes.MapRoute("get-text-file3", "{project}/objects/info/http-alternates", new { controller = "Dumb", action = "GetTextFile" });
+            //routes.MapRoute("info-refs-dumb", "dumb/{store}/{project}/info/refs", new {controller = "Dumb", action = "InfoRefs"});
+            routes.MapRoute("get-text-file", "{store}/{project}/HEAD", new { controller = "Dumb", action = "GetTextFile" });
+            routes.MapRoute("get-text-file2", "{store}/{project}/objects/info/alternates", new { controller = "Dumb", action = "GetTextFile" });
+            routes.MapRoute("get-text-file3", "{store}/{project}/objects/info/http-alternates", new { controller = "Dumb", action = "GetTextFile" });
 
-			routes.MapRoute("get-info-packs", "{project}/info/packs", new {controller = "Dumb", action = "GetInfoPacks"});
+            routes.MapRoute("get-info-packs", "{store}/{project}/info/packs", new { controller = "Dumb", action = "GetInfoPacks" });
 
-			routes.MapRoute("get-text-file4", "{project}/objects/info/{something}", new {controller = "Dumb", action = "GetTextFile"});
+            routes.MapRoute("get-text-file4", "{store}/{project}/objects/info/{something}", new { controller = "Dumb", action = "GetTextFile" });
 
-			routes.MapRoute("get-loose-object", "{project}/objects/{segment1}/{segment2}", 
+            routes.MapRoute("get-loose-object", "{store}/{project}/objects/{segment1}/{segment2}", 
 				new {controller = "Dumb", action = "GetLooseObject"});
 
-			routes.MapRoute("get-pack-file", "{project}/objects/pack/pack-{filename}.pack", 
+            routes.MapRoute("get-pack-file", "{store}/{project}/objects/pack/pack-{filename}.pack", 
 				new { controller = "Dumb", action = "GetPackFile" });
-			
-			routes.MapRoute("get-idx-file", "{project}/objects/pack/pack-{filename}.idx", 
+
+            routes.MapRoute("get-idx-file", "{store}/{project}/objects/pack/pack-{filename}.idx", 
 				new {controller = "Dumb", action = "GetIdxFile"});
 
-			routes.MapRoute("project", "{project}");
+			routes.MapRoute("project", "{store}/{project}");
 		}
 
 		protected void Application_Start() {

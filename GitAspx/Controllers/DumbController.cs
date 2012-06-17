@@ -13,32 +13,37 @@ namespace GitAspx.Controllers {
 			this.repositories = repositories;
 		}
 
-		public ActionResult GetTextFile(string project) {
-			return WriteFile(project, "text/plain");
+		public ActionResult GetTextFile(string store, string project) {
+            return WriteFile(store, project, "text/plain");
 		}
 
-		public ActionResult GetInfoPacks(string project) {
-			return WriteFile(project, "text/plain; charset=utf-8");
+        public ActionResult GetInfoPacks(string store, string project)
+        {
+            return WriteFile(store, project, "text/plain; charset=utf-8");
 		}
 
-		public ActionResult GetLooseObject(string project) {
-			return WriteFile(project, "application/x-git-loose-object");
+        public ActionResult GetLooseObject(string store, string project)
+        {
+            return WriteFile(store, project, "application/x-git-loose-object");
 		}
 
-		public ActionResult GetPackFile(string project) {
-			return WriteFile(project, "application/x-git-packed-objects");
+        public ActionResult GetPackFile(string store, string project)
+        {
+            return WriteFile(store, project, "application/x-git-packed-objects");
 		}
 
-		public ActionResult GetIdxFile(string project) {
-			return WriteFile(project, "application/x-git-packed-objects-toc");
+        public ActionResult GetIdxFile(string store, string project)
+        {
+            return WriteFile(store, project, "application/x-git-packed-objects-toc");
 		}
 
-		private ActionResult WriteFile(string project, string contentType) {
+        private ActionResult WriteFile(string store, string project, string contentType)
+        {
 			Response.WriteNoCache();
 			Response.ContentType = contentType;
-			var repo = repositories.GetRepository(project);
+			var repo = repositories.GetRepository(store, project);
 
-			string path = Path.Combine(repo.GitDirectory(), GetPathToRead(project));
+			string path = Path.Combine(repo.GitDirectory(), GetPathToRead(store, project));
 
 			if(! System.IO.File.Exists(path)) {
 				return new NotFoundResult();
@@ -49,7 +54,9 @@ namespace GitAspx.Controllers {
 			return new EmptyResult();
 		}
 
-		private string GetPathToRead(string project) {
+        //TODO:Fix GetPathToRead with store value
+        private string GetPathToRead(string store, string project)
+        {
 			int index = Request.Url.PathAndQuery.IndexOf(project) + project.Length + 1;
 			return Request.Url.PathAndQuery.Substring(index);
 		}
